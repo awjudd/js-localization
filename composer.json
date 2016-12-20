@@ -1,0 +1,21 @@
+{
+    "name": "awjudd/js-localization",
+    "description": "JavaScript Localization",
+    "type": "library",
+    "require": {
+        "php": "5.6",
+        "illuminate/support": "^5.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Awjudd\\JavaScriptLocalization": "src/"
+        }
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andrew Judd",
+            "email": "contact@andrewjudd.ca"
+        }
+    ]
+}
