@@ -1,6 +1,6 @@
 <?php
 
-namespace Awjudd\JavascriptLocalization;
+namespace Awjudd\JavaScriptLocalization;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
