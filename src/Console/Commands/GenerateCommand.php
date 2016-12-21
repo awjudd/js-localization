@@ -87,6 +87,7 @@ class GenerateCommand extends Command
 
         // Make sure that the folder exists
         if(!File::exists($this->_destination)) {
+            // It didn't exist, so make it
             File::makeDirectory($this->_destination);
         }
 
@@ -95,6 +96,7 @@ class GenerateCommand extends Command
             // Build up the destination path
             $output = $this->fullFilePath($language);
 
+            // Write out details
             $this->info(sprintf('Processing Resource: %s', $this->locale($language)));
 
             // Cycle through all of the resource files
@@ -106,19 +108,29 @@ class GenerateCommand extends Command
             foreach($files as $file) {
                 $filePath = $file->getRealPath();
 
+                // Strip out un-necessary actions
                 $key = str_ireplace('/', '.', str_ireplace('.php', '', str_ireplace($language . '/', '', $filePath)));
 
                 $resources = require $filePath;
                 $data = array_add($data, $key, $resources);
             }
 
+            // Grab the template
             $contents = File::get(__DIR__ . '/../../resources/templates/template.js');
             $contents = str_ireplace('{resource-data}', json_encode($data), $contents);
 
+            // Write out the details
             File::put($output, $contents);
         }
     }
 
+    /**
+     * Derives the full file name for the 
+     *
+     * @param      string  $languageFolder  The language folder
+     *
+     * @return     string  ( description_of_the_return_value )
+     */
     public function fullFilePath($languageFolder)
     {
         return sprintf(
@@ -128,6 +140,13 @@ class GenerateCommand extends Command
         );
     }
 
+    /**
+     * Derives thep locale based on the folder that it is in.
+     *
+     * @param      string  $languageFolder  The language folder
+     *
+     * @return     string  The locale
+     */
     public function locale($languageFolder)
     {
         $resourceCode = explode('/', $languageFolder);
