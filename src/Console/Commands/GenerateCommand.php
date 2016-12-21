@@ -12,7 +12,7 @@ class GenerateCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'js-localize:generate';
+    protected $signature = 'js-localize:generate {locale?}';
 
     /**
      * The console command description.
@@ -78,7 +78,12 @@ class GenerateCommand extends Command
     public function handle()
     {
         // Grab all of the directories
-        $languages = collect(File::directories($this->_source));
+        $languages = collect(File::directories($this->_source))
+                        ->filter(function($index, $value) {
+                            $locale = $this->argument('locale');
+
+                            return is_null($locale) ? true : preg_match('/' . $locale . '$/', $value) == 1;
+                        });
 
         // Make sure that the folder exists
         if(!File::exists($this->_destination)) {
@@ -89,6 +94,8 @@ class GenerateCommand extends Command
         foreach($languages as $language) {
             // Build up the destination path
             $output = $this->fullFilePath($language);
+
+            $this->info(sprintf('Processing Resource: %s', $this->locale($language)));
 
             // Cycle through all of the resource files
             $files = File::allFiles($language);
@@ -114,13 +121,16 @@ class GenerateCommand extends Command
 
     public function fullFilePath($languageFolder)
     {
-        $resourceCode = explode('/', $languageFolder);
-        $resourceCode = end($resourceCode);
-
         return sprintf(
             '%s/%s',
             $this->_destination,
-            str_ireplace(':locale:', $resourceCode, $this->_pattern)
+            str_ireplace(':locale:', $this->locale($languageFolder), $this->_pattern)
         );
+    }
+
+    public function locale($languageFolder)
+    {
+        $resourceCode = explode('/', $languageFolder);
+        return end($resourceCode);
     }
 }
