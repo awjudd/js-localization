@@ -13,5 +13,12 @@ return [
      * 
      * @var string
      */
-    'destination' => storage_path('lang'),
+    'destination' => storage_path('app/public/lang'),
+
+    /**
+     * The namne that each of the resource files will be generated with.
+     * 
+     * @var string
+     */
+    'pattern' => 'resources-:locale:.js',
 ];
