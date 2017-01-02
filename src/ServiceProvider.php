@@ -18,6 +18,10 @@ class ServiceProvider extends BaseServiceProvider
             __DIR__.'/../config/js-localization.php' => config_path('js-localization.php'),
         ]);
 
+        $this->publishes([
+            __DIR__.'/resources/assets/js/resources.js' => config_path('vendor/js-localization/js-localization.js'),
+        ], 'public');
+
         if ($this->app->runningInConsole()) {
             $this->commands([
                 GenerateCommand::class,

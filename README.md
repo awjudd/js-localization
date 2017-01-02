@@ -12,7 +12,7 @@ A simple localization library built for **Laravel** to take all of the resources
 In the `require` key of `composer.json` file add the following:
 
 ```
-"awjudd/js-localization": "dev-master"
+"awjudd/js-localization": "0.*"
 ```
 
 Run the Composer update command
@@ -80,6 +80,12 @@ Resources.get('array.dotted.notation.for.folder.structure.value', {
 ```
 
 This will find the required resource and apply any replacements if it is a string, where the replacements are the second parameter of this function call.
+
+To compile the resources, you will need to run the following command:
+```
+php artisan js-localize:generate
+```
+
 ## License
 
 JavaScript Localization is free software distributed under the terms of the MIT license
