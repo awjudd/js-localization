@@ -19,7 +19,7 @@ class ServiceProvider extends BaseServiceProvider
         ]);
 
         $this->publishes([
-            __DIR__.'/resources/assets/js/resources.js' => config_path('vendor/js-localization/js-localization.js'),
+            __DIR__.'/resources/assets/js' => public_path('vendor/js-localization'),
         ], 'public');
 
         if ($this->app->runningInConsole()) {
